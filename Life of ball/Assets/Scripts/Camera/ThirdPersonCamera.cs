@@ -20,19 +20,33 @@ public class ThirdPersonCamera : MonoBehaviour
     float sensitivityX = 0f;
     float sensitivityY = 0f;
 
+    public RaycastHit hit;
+    float distanceOffset;
+
     void Start()
     {
         camTransform = transform;
         cam = Camera.main;
 
-        offset = transform.position - player.transform.position;
     }
 
     void Update()
     {
-       // currentY += lookAt.rotation.x;
-       // currentX +=
-     currentY += Input.GetAxis("Mouse X");
+        offset = transform.position - player.transform.position;
+        hit = new RaycastHit();
+
+        if (Physics.Raycast(player.transform.position, offset, out hit, distance + 0.5f))
+        {
+            //Debug.DrawLine(player.transform.position,hit.point, Color.red);
+
+            distanceOffset = distance - hit.distance + 0.8f;
+            distanceOffset = Mathf.Clamp(distanceOffset, 0, distance);
+        }
+        else
+        {
+            distanceOffset = 0;
+        }
+        currentY += Input.GetAxis("Mouse X");
      currentX -= Input.GetAxis("Mouse Y");
         //currentY = Mathf.Clamp(currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
     }
@@ -40,10 +54,13 @@ public class ThirdPersonCamera : MonoBehaviour
     // LateUpdate is called after Update each frame
     void LateUpdate()
     {
-        Vector3 dir = new Vector3(0, 0, -distance);
+        Vector3 dir = new Vector3(0, 0, -distance + distanceOffset);
         Quaternion rotation = Quaternion.Euler(currentX, currentY, 0);
-        camTransform.position = lookAt.position + rotation * dir;
+        camTransform.position = rotation * dir + lookAt.position;
         camTransform.LookAt(lookAt.position);
+        Debug.DrawLine(lookAt.position, camTransform.position, Color.blue);
+
+
         // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
         //transform.position = player.transform.position + offset;
 

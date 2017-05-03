@@ -35,9 +35,10 @@ public class PlayerMovement : MonoBehaviour
     void Move(float h, float j, float v)
     {
         movement = new Vector3(h, 0, v);
+        movement = Camera.main.transform.TransformDirection(movement);
 
         //Rotera boll efter kaverafv
-       // Quaternion rotation = Quaternion.Euler(, currentY, 0);
+        // Quaternion rotation = Quaternion.Euler(, currentY, 0);
 
         //movement.normalized();
         playerRigidbody.AddForce(movement * speed);
