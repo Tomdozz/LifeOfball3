@@ -60,5 +60,10 @@ public class ThirdPersonCamera : MonoBehaviour
         camTransform.LookAt(lookAt.position);
         Debug.DrawLine(lookAt.position, camTransform.position, Color.blue);
 
+
+        // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
+        //transform.position = player.transform.position + offset;
+
+        // transform.LookAt(player.transform);
     }
 }

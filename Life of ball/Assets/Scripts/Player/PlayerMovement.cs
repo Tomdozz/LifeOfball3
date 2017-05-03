@@ -9,21 +9,19 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed = 6f;
     public Camera cam;
     public Transform camTransform;
-  
+    float f;
 
-  
+    bool isGrounded;
 
     private Vector3 movement;
     Rigidbody playerRigidbody;
     RaycastHit hit;
-    float distance;
-    Vector3 direction;
 
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
-    
-
+        cam = Camera.main;
+        camTransform = cam.transform;
 
     }
 
@@ -32,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        direction = transform.TransformDirection(Vector3.down);
         Move(h, 0, v);
     }
 
@@ -41,20 +38,39 @@ public class PlayerMovement : MonoBehaviour
         movement = new Vector3(h, 0, v);
         movement = Camera.main.transform.TransformDirection(movement);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (Physics.Raycast(transform.position, direction, 1.5f))
-            {
-               //Debug.DrawLine(transform.position,hit.point, Color.red);
+        //Rotera boll efter kaverafv
+        // Quaternion rotation = Quaternion.Euler(, currentY, 0);
 
-                playerRigidbody.AddForce(0, jumpSpeed, 0);
-
-            }
-        }
-
+        //movement.normalized();
         playerRigidbody.AddForce(movement * speed);
 
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+        {
+            playerRigidbody.AddForce(0, jumpSpeed, 0);
+        }
     }
 
+    bool OnGround()
+    {
+        hit = new RaycastHit();
+        Debug.DrawLine(playerRigidbody.transform.position,Vector3.down, Color.red);
+        if (Physics.Raycast(playerRigidbody.transform.position, Vector3.down, out hit, 0.1f))
+        {
+            isGrounded = true;
+            return isGrounded;
+        }
 
+        isGrounded = false;
+        return isGrounded;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+        else
+            isGrounded = false;
+    }
 }
