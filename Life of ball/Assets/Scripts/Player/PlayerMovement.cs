@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movement;
     Rigidbody playerRigidbody;
     RaycastHit hit;
+    Vector3 direction;
+    float distance = 0.5f;
 
     void Start()
     {
@@ -31,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Move(h, 0, v);
+        direction = transform.position - new Vector3(0, 1, 0)*0.6f;
+        
     }
 
     void Move(float h, float j, float v)
@@ -42,11 +46,18 @@ public class PlayerMovement : MonoBehaviour
         // Quaternion rotation = Quaternion.Euler(, currentY, 0);
 
         //movement.normalized();
+
+        Debug.DrawLine(transform.position, direction, Color.red);
+
         playerRigidbody.AddForce(movement * speed);
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerRigidbody.AddForce(0, jumpSpeed, 0);
+
+            if (Physics.Raycast(transform.position, direction, 0.5f) == true)
+            {
+                playerRigidbody.AddForce(0, jumpSpeed, 0);
+            }
         }
     }
 
