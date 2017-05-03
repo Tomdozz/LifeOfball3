@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 movement;
     Rigidbody playerRigidbody;
+    RaycastHit hit;
 
     void Start()
     {
@@ -43,10 +44,24 @@ public class PlayerMovement : MonoBehaviour
         //movement.normalized();
         playerRigidbody.AddForce(movement * speed);
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
             playerRigidbody.AddForce(0, jumpSpeed, 0);
         }
+    }
+
+    bool OnGround()
+    {
+        hit = new RaycastHit();
+        Debug.DrawLine(playerRigidbody.transform.position,Vector3.down, Color.red);
+        if (Physics.Raycast(playerRigidbody.transform.position, Vector3.down, out hit, 0.1f))
+        {
+            isGrounded = true;
+            return isGrounded;
+        }
+
+        isGrounded = false;
+        return isGrounded;
     }
 
     void OnCollisionEnter(Collision collision)
