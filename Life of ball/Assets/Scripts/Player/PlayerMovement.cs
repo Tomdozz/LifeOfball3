@@ -4,26 +4,23 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    public float speed = 6f;
-    public float jumpSpeed = 6f;
-    public Camera cam;
+    public Camera cameraMain;
     public Transform camTransform;
-    float f;
+    public float speed = 6f;
+    public float jumpForce = 6f;
+    public bool isGrounded;
+    public float distance = 0.25f;
 
-    bool isGrounded;
-
-    private Vector3 movement;
-    Rigidbody playerRigidbody;
-    RaycastHit hit;
+    Vector3 movement;
     Vector3 direction;
-    float distance = 0.5f;
+    Rigidbody playerRigidbody;
+
 
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
-        cam = Camera.main;
-        camTransform = cam.transform;
+        cameraMain = Camera.main;
+        camTransform = cameraMain.transform;
 
     }
 
@@ -33,8 +30,7 @@ public class PlayerMovement : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Move(h, 0, v);
-        direction = transform.position - new Vector3(0, 1, 0)*0.6f;
-        
+
     }
 
     void Move(float h, float j, float v)
@@ -42,46 +38,44 @@ public class PlayerMovement : MonoBehaviour
         movement = new Vector3(h, 0, v);
         movement = Camera.main.transform.TransformDirection(movement);
 
-        //Rotera boll efter kaverafv
-        // Quaternion rotation = Quaternion.Euler(, currentY, 0);
-
-        //movement.normalized();
-
-        Debug.DrawLine(transform.position, direction, Color.red);
+        //Debug.DrawLine(transform.position, direction, Color.red);
 
         playerRigidbody.AddForce(movement * speed);
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //GroundCheck();
+            //if (isGrounded)
+            //{
+                playerRigidbody.AddForce(0, jumpForce, 0);
 
-            if (Physics.Raycast(transform.position, direction, 0.5f) == true)
-            {
-                playerRigidbody.AddForce(0, jumpSpeed, 0);
-            }
+            //}
+
         }
+
     }
 
-    bool OnGround()
+    public void GroundCheck()
     {
-        hit = new RaycastHit();
-        Debug.DrawLine(playerRigidbody.transform.position,Vector3.down, Color.red);
-        if (Physics.Raycast(playerRigidbody.transform.position, Vector3.down, out hit, 0.1f))
+        if (isGrounded)
         {
-            isGrounded = true;
-            return isGrounded;
+            distance = 0.25f;
+        }
+        else
+        {
+            distance = 0.05f;
         }
 
-        isGrounded = false;
-        return isGrounded;
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "Ground")
+        if (Physics.Raycast(transform.position - new Vector3(0, 0.55f, 0), -transform.up, distance))
         {
             isGrounded = true;
         }
         else
+        {
             isGrounded = false;
+        }
     }
+
+
+
+
 }
