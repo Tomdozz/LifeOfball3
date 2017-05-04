@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour {
     public int startHealth = 100;
     public int currentHealth;
     public Slider healthSlider;
+    public Text healthText;
 
     bool isDead;
     bool damage;
@@ -15,13 +16,14 @@ public class PlayerHealth : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-		
+        currentHealth = 100;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-	    	
+        healthSlider.value = 30;
+        healthText.text = currentHealth.ToString();
 	}
 
     public void TakeDmg(int amount)
