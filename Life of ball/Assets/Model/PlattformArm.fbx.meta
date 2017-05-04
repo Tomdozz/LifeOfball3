@@ -85,7 +85,67 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: transform1
+        weight: 1
+      - path: transform1/jointBase
+        weight: 1
+      - path: transform1/jointBase/base
+        weight: 1
+      - path: transform1/jointBase/joint1Fot
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/armpart1_1
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/armpart1_2
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2/armpart2
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2/joint3
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2/joint3/armpart3_1
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2/joint3/armpart3_2
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2/joint3/joint4
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2/joint3/joint4/armpart4
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2/joint3/joint4/joint5Waste
+        weight: 1
+      - path: transform1/jointBase/joint1Fot/joint2/joint3/joint4/plattform
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
