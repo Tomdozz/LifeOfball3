@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour {
+    public float speed = 6f;
 
     private CharacterController controller;
 
@@ -11,40 +12,68 @@ public class PlayerMotor : MonoBehaviour {
     private float zVelocity;
     private float gravity = 14.0f;
     private float jumpForce = 10.0f;
+    float h, v;
+    bool isGrounded;
+
 
     Vector3 moveVector;
-
-    public float speed = 6f;
+    Rigidbody playerRigidbody;
 
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-     
+        playerRigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        horizontalVelocity = Input.GetAxis("Horizontal");
-        zVelocity = Input.GetAxis("Vertical");
-        if (controller.isGrounded)
+        h = Input.GetAxis("Horizontal");
+        v = Input.GetAxis("Vertical");
+        //if (controller.isGrounded)
+        //{
+
+        //    verticalVelocity = -gravity * Time.deltaTime;
+        //    if(Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        verticalVelocity = jumpForce;
+        //    }
+        //}
+        //else
+        //{
+        //    verticalVelocity -= gravity * Time.deltaTime;
+
+        //}
+
+        //moveVector = new Vector3(horizontalVelocity * speed, verticalVelocity, zVelocity * speed);
+        //moveVector = Camera.main.transform.TransformDirection(moveVector);
+        //controller.Move(moveVector * Time.deltaTime);
+        Move(h, 0, v);
+    }
+
+    void Move(float h, float j, float v)
+    {
+        moveVector = new Vector3(h, 0, v);
+        moveVector = Camera.main.transform.TransformDirection(moveVector);
+       
+        playerRigidbody.AddForce(moveVector * speed);
+        playerRigidbody.MovePosition(transform.position + moveVector);
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            
-            verticalVelocity = -gravity * Time.deltaTime;
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                verticalVelocity = jumpForce;
-            }
+            playerRigidbody.AddForce(0, jumpForce, 0);
+            isGrounded = false;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Ground")
+        {
+            isGrounded = true;
         }
         else
-        {
-            verticalVelocity -= gravity * Time.deltaTime;
-            
-        }
-
-        moveVector = new Vector3(horizontalVelocity * speed, verticalVelocity, zVelocity * speed);
-        moveVector = Camera.main.transform.TransformDirection(moveVector);
-        controller.Move(moveVector * Time.deltaTime);
+            isGrounded = false;
     }
-	
+
 }
