@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour {
     public int currentHealth;
     public Slider healthSlider;
     public Text healthText;
+    PlayerMovement pMove;
 
     bool isDead;
     bool damage;
@@ -22,7 +23,7 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        healthSlider.value = 30;
+        healthSlider.value = 100;
         healthText.text = currentHealth.ToString();
 	}
 
@@ -40,5 +41,7 @@ public class PlayerHealth : MonoBehaviour {
     void Dead()
     {
         isDead = true;
+
+        pMove.enabled = false;
     }
 }
