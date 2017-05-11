@@ -13,7 +13,7 @@ public class BridgeTrigger : MonoBehaviour
     void Start()
     {
         buttonAnimator = GetComponent<Animator>();
-        bridgeAnimator.Play("IdleFolded");
+      
 
     }
 
@@ -28,7 +28,7 @@ public class BridgeTrigger : MonoBehaviour
     void OnTriggerExit(Collider col)
     {
         buttonAnimator.Play("ButtonUp");
-        bridgeAnimator.Play("ArmExtend");
+        bridgeAnimator.Play("Fold");
 
     }
 
