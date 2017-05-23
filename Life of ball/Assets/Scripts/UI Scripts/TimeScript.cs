@@ -23,17 +23,15 @@ public class TimeScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
+      //  if (Input.GetKeyDown(KeyCode.P))
+      //  {
             play = true;
-        }
-        while(play)
-        {
             gameTime += Time.deltaTime;
             ellapsedTime = gameTime.ToString();
             int timer = (int)gameTime;
             timeText.text = "Time: " + timer.ToString();//ellapsedTime;
-        }
+       // }
+
 
     }
 }
