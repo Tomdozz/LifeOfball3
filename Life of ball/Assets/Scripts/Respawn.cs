@@ -10,6 +10,6 @@ public class Respawn : MonoBehaviour {
     void FixedUpdate()
     {
         if (transform.position.y < threshold)
-            transform.position = new Vector3(83, 15, 10);
+            transform.position = new Vector3(40, 35, -45);
     }
 }
