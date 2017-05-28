@@ -8,6 +8,8 @@ public class TimeScript : MonoBehaviour
 {
 
     public string ellapsedTime;
+    public GameObject player;
+    public GameObject button;
     bool play;
     Text timeText;
     DateTime time;
@@ -31,7 +33,12 @@ public class TimeScript : MonoBehaviour
             int timer = (int)gameTime;
             timeText.text = "Time: " + timer.ToString();//ellapsedTime;
        // }
+    }
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Player")
+        {
 
-
+        }
     }
 }
